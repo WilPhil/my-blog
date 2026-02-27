@@ -21,18 +21,16 @@ class Post extends Model
     #[Scope]
     protected function filter(Builder $query, array $filters): void
     {
-        $query->when($filters['search'] ?? false, fn($query, $search) => $query->where('title', 'like', '%' . $search . '%'));
+        $query->when($filters['search'] ?? false, fn ($query, $search) => $query->where('title', 'like', '%'.$search.'%'));
 
         $query->when(
             $filters['category'] ?? false,
-            fn($query, $category) =>
-            $query->whereHas('category', fn(Builder $query) => $query->where('slug', $category))
+            fn ($query, $category) => $query->whereHas('category', fn (Builder $query) => $query->where('slug', $category))
         );
 
         $query->when(
             $filters['author'] ?? false,
-            fn($query, $author) =>
-            $query->whereHas('author', fn(Builder $query) => $query->where('username', $author))
+            fn ($query, $author) => $query->whereHas('author', fn (Builder $query) => $query->where('username', $author))
         );
     }
 

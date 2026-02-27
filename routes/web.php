@@ -20,12 +20,12 @@ Route::get('/posts', function () {
 
     if (request('category')) {
         $category = Category::firstWhere('slug', request('category'));
-        $title = $posts->total() . ' ' . $category->name . ' articles.';
+        $title = $posts->total().' '.$category->name.' articles.';
     }
 
     if (request('author')) {
         $author = User::firstWhere('username', request('author'));
-        $title = $posts->total() . ' ' . $author->name . ' articles.';
+        $title = $posts->total().' '.$author->name.' articles.';
     }
 
     return view('posts', ['title' => $title, 'posts' => $posts]);
@@ -53,4 +53,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
