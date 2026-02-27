@@ -11,72 +11,84 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <x-nav-link href="/" :current="request()->is('/')">
+                        <x-fe-nav-link href="/" :current="request()->is('/')">
                             Home
-                        </x-nav-link>
-                        <x-nav-link
+                        </x-fe-nav-link>
+                        <x-fe-nav-link
                             href="/posts"
                             :current="request()->is('posts')"
                         >
                             Blog
-                        </x-nav-link>
-                        <x-nav-link
+                        </x-fe-nav-link>
+                        <x-fe-nav-link
                             href="/about"
                             :current="request()->is('about')"
                         >
                             About
-                        </x-nav-link>
-                        <x-nav-link
+                        </x-fe-nav-link>
+                        <x-fe-nav-link
                             href="/contact"
                             :current="request()->is('contact')"
                         >
                             Contact
-                        </x-nav-link>
+                        </x-fe-nav-link>
                     </div>
                 </div>
             </div>
             <div class="hidden md:block">
-                <div class="ml-4 flex items-center md:ml-6">
-                    <!-- Profile dropdown -->
-                    <el-dropdown class="relative ml-3">
-                        <button
-                            class="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                        >
-                            <span class="absolute -inset-1.5"></span>
-                            <span class="sr-only">Open user menu</span>
-                            <img
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
-                                class="size-8 rounded-full outline -outline-offset-1 outline-white/10"
-                            />
-                        </button>
+                @if (Auth::check())
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <!-- Profile dropdown -->
+                        <el-dropdown class="relative ml-3">
+                            <button
+                                class="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 cursor-pointer"
+                            >
+                                <span class="absolute -inset-1.5"></span>
+                                <span class="sr-only">Open user menu</span>
+                                <div class="text-gray-300 text-sm font-medium mr-3">{{ Auth::user()->name }}</div>
+                                <img
+                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                    alt=""
+                                    class="size-8 rounded-full outline -outline-offset-1 outline-white/10"
+                                />
+                            </button>
 
-                        <el-menu
-                            anchor="bottom end"
-                            popover
-                            class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                        >
-                            <a
-                                href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
+                            <el-menu
+                                anchor="bottom end"
+                                popover
+                                class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                             >
-                                Your profile
-                            </a>
-                            <a
-                                href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
-                            >
-                                Settings
-                            </a>
-                            <a
-                                href="#"
-                                class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
-                            >
-                                Sign out
-                            </a>
-                        </el-menu>
-                    </el-dropdown>
-                </div>
+                                <a
+                                    href="/profile"
+                                    class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
+                                >
+                                    Your profile
+                                </a>
+                                <a
+                                    href="/dashboard"
+                                    class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
+                                >
+                                    Settings
+                                </a>
+                                <form method="POST" action="/logout">
+                                    @csrf
+                                    <button
+                                        type="submit"
+                                        class="block w-full text-start px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden cursor-pointer"
+                                    >
+                                        Log out
+                                    </button>
+                                </form>
+                            </el-menu>
+                        </el-dropdown>
+                    </div>
+                @else
+                    <div>
+                        <a href="/login" class="text-gray-300 text-sm font-medium">Login</a>
+                        <span class="text-gray-300 text-sm mx-3">|</span>
+                        <a href="/register" class="text-gray-300 text-sm font-medium">Register</a>
+                    </div>
+                @endif
             </div>
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
@@ -125,34 +137,34 @@
 
     <el-disclosure id="mobile-menu" hidden class="block md:hidden">
         <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-            <x-nav-link
+            <x-fe-nav-link
                 href="/"
                 :current="request()->is('home')"
                 class="block"
             >
                 Home
-            </x-nav-link>
-            <x-nav-link
+            </x-fe-nav-link>
+            <x-fe-nav-link
                 href="/posts"
                 :current="request()->is('posts')"
                 class="block"
             >
                 Blog
-            </x-nav-link>
-            <x-nav-link
+            </x-fe-nav-link>
+            <x-fe-nav-link
                 href="/about"
                 :current="request()->is('about')"
                 class="block"
             >
                 About
-            </x-nav-link>
-            <x-nav-link
+            </x-fe-nav-link>
+            <x-fe-nav-link
                 href="/contact"
                 :current="request()->is('contact')"
                 class="block"
             >
                 Contact
-            </x-nav-link>
+            </x-fe-nav-link>
         </div>
         <div class="border-t border-white/10 pt-4 pb-3">
             <div class="flex items-center px-5">
