@@ -78,11 +78,13 @@
                                 <th scope="row" class="px-4 py-3">
                                     {{ $loop->iteration }}
                                 </th>
-                                <td class="px-4 py-3 max-w-[30rem] font-medium text-gray-900 dark:text-white">
-                                    {{ $post->title }}
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                                    <a href="{{ route("dashboard.show", $post) }}">
+                                        {{ $post->title }}
+                                    </a>
                                 </td>
                                 <td class="px-4 py-3">{{ $post->category->name }}</td>
-                                <td class="px-4 py-3">{{ $post->created_at->diffForHumans() }}</td>
+                                <td class="px-4 py-3">{{ $post->created_at->toFormattedDateString() }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button
                                         id="post-{{ $post->id }}-dropdown-button"
@@ -137,10 +139,11 @@
                                                 </button>
                                             </li>
                                             <li>
-                                                <button
+                                                <a
+                                                    href="{{ route("dashboard.show", $post) }}"
                                                     type="button"
-                                                    data-modal-target="readProductModal"
-                                                    data-modal-toggle="readProductModal"
+                                                    data-modal-target="readProductModalX"
+                                                    data-modal-toggle="readProductModalX"
                                                     class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
                                                 >
                                                     <svg
@@ -157,8 +160,8 @@
                                                             d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
                                                         />
                                                     </svg>
-                                                    Preview
-                                                </button>
+                                                    Detail post
+                                                </a>
                                             </li>
                                             <li>
                                                 <button

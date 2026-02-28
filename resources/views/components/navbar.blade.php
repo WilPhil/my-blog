@@ -48,7 +48,7 @@
                                     Your profile
                                 </a>
                                 <a
-                                    href="/dashboard"
+                                    href="{{ route("dashboard.index") }}"
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
                                 >
                                     Settings
@@ -148,7 +148,7 @@
                         Your profile
                     </a>
                     <a
-                        href="/dashboard"
+                        href="{{ route("dashboard.index") }}"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
                     >
                         Settings
