@@ -7,15 +7,9 @@
 
         <title>{{ $title }}</title>
 
-        @vite("resources/css/app.css")
-        <script
-            src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1"
-            type="module"
-        ></script>
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
+        @vite(["resources/css/app.css", "resources/js/app.js"])
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="h-full">
         <div class="min-h-full">
@@ -30,6 +24,5 @@
                 </div>
             </main>
         </div>
-        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
     </body>
 </html>
