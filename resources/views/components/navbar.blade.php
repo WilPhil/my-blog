@@ -11,27 +11,10 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <x-fe-nav-link href="/" :current="request()->is('/')">
-                            Home
-                        </x-fe-nav-link>
-                        <x-fe-nav-link
-                            href="/posts"
-                            :current="request()->is('posts')"
-                        >
-                            Blog
-                        </x-fe-nav-link>
-                        <x-fe-nav-link
-                            href="/about"
-                            :current="request()->is('about')"
-                        >
-                            About
-                        </x-fe-nav-link>
-                        <x-fe-nav-link
-                            href="/contact"
-                            :current="request()->is('contact')"
-                        >
-                            Contact
-                        </x-fe-nav-link>
+                        <x-fe-nav-link href="/" :current="request()->is('/')">Home</x-fe-nav-link>
+                        <x-fe-nav-link href="/posts" :current="request()->is('posts')">Blog</x-fe-nav-link>
+                        <x-fe-nav-link href="/about" :current="request()->is('about')">About</x-fe-nav-link>
+                        <x-fe-nav-link href="/contact" :current="request()->is('contact')">Contact</x-fe-nav-link>
                     </div>
                 </div>
             </div>
@@ -124,11 +107,7 @@
                         aria-hidden="true"
                         class="size-6 not-in-aria-expanded:hidden"
                     >
-                        <path
-                            d="M6 18 18 6M6 6l12 12"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
             </div>
@@ -137,73 +116,69 @@
 
     <el-disclosure id="mobile-menu" hidden class="block md:hidden">
         <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-            <x-fe-nav-link
-                href="/"
-                :current="request()->is('home')"
-                class="block"
-            >
-                Home
-            </x-fe-nav-link>
-            <x-fe-nav-link
-                href="/posts"
-                :current="request()->is('posts')"
-                class="block"
-            >
-                Blog
-            </x-fe-nav-link>
-            <x-fe-nav-link
-                href="/about"
-                :current="request()->is('about')"
-                class="block"
-            >
-                About
-            </x-fe-nav-link>
-            <x-fe-nav-link
-                href="/contact"
-                :current="request()->is('contact')"
-                class="block"
-            >
-                Contact
-            </x-fe-nav-link>
+            <x-fe-nav-link href="/" :current="request()->is('home')" class="block">Home</x-fe-nav-link>
+            <x-fe-nav-link href="/posts" :current="request()->is('posts')" class="block">Blog</x-fe-nav-link>
+            <x-fe-nav-link href="/about" :current="request()->is('about')" class="block">About</x-fe-nav-link>
+            <x-fe-nav-link href="/contact" :current="request()->is('contact')" class="block">Contact</x-fe-nav-link>
         </div>
         <div class="border-t border-white/10 pt-4 pb-3">
-            <div class="flex items-center px-5">
-                <div class="shrink-0">
-                    <img
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                        class="size-10 rounded-full outline -outline-offset-1 outline-white/10"
-                    />
-                </div>
-                <div class="ml-3">
-                    <div class="text-base/5 font-medium text-white">
-                        Tom Cook
+            @if (Auth::check())
+                <div class="flex items-center px-5">
+                    <div class="shrink-0">
+                        <img
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt=""
+                            class="size-10 rounded-full outline -outline-offset-1 outline-white/10"
+                        />
                     </div>
-                    <div class="text-sm font-medium text-gray-400">
-                        tom@example.com
+                    <div class="ml-3">
+                        <div class="text-base/5 font-medium text-white">
+                            {{ Auth::user()->name }}
+                        </div>
+                        <div class="text-sm font-medium text-gray-400">
+                            {{ Auth::user()->email }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mt-3 space-y-1 px-2">
-                <a
-                    href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                >
-                    Your profile
-                </a>
-                <a
-                    href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                >
-                    Settings
-                </a>
-                <a
-                    href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                >
-                    Sign out
-                </a>
-            </div>
+                <div class="mt-3 space-y-1 px-2">
+                    <a
+                        href="/profile"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                    >
+                        Your profile
+                    </a>
+                    <a
+                        href="/dashboard"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                    >
+                        Settings
+                    </a>
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <button
+                            type="submit"
+                            class="block text-start w-full rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white cursor-pointer"
+                        >
+                            Log out
+                        </button>
+                    </form>
+                </div>
+            @else
+                <div class="flex flex-col items-start px-2">
+                    <a
+                        href="/login"
+                        class="block w-full rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                    >
+                        Login
+                    </a>
+                    <a
+                        href="/register"
+                        class="block w-full rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                    >
+                        Register
+                    </a>
+                </div>
+            @endif
         </div>
     </el-disclosure>
 </nav>
