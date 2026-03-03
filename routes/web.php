@@ -44,8 +44,22 @@ Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact']);
 });
 
-Route::get('/dashboard', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.index');
-Route::get('/dashboard/{post:slug}', [PostController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.show');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Create
+    Route::post('/dashboard', [PostController::class, 'store'])->name('dashboard.store');
+    Route::get('/dashboard/create', [PostController::class, 'create'])->name('dashboard.create');
+
+    // Delete
+    Route::delete('/dashboard/{post:slug}', [PostController::class, 'destroy'])->name('dashboard.destroy');
+
+    // Update
+    Route::get('/dashboard/{post:slug}/edit', [PostController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('/dashboard/{post:slug}', [PostController::class, 'update'])->name('dashboard.update');
+
+    // Read
+    Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{post:slug}', [PostController::class, 'show'])->name('dashboard.show');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

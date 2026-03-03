@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -13,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('author_id', Auth::user()->id);
+        $posts = Post::where('author_id', Auth::user()->id)->latest();
 
         if (request('title')) {
             $posts->where('title', 'like', '%'.request('title').'%');
@@ -27,7 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.create');
     }
 
     /**
@@ -35,7 +37,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'title' => 'required',
+        //     'category_id' => 'required',
+        //     'body' => 'required',
+        // ]);
+
+        Validator::make($request->all(), [
+            'title' => 'required|min:5|max:255',
+            'category_id' => 'required',
+            'body' => 'required',
+        ], [], [
+            'category_id' => 'category',
+        ])->validate();
+
+        Post::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'author_id' => Auth::user()->id,
+            'category_id' => $request->category_id,
+            'body' => $request->body,
+        ]);
+
+        return redirect(route('dashboard.index'))->with('success', 'Post created successfully.');
     }
 
     /**
@@ -49,24 +73,40 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('dashboard.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'category_id' => 'required',
+            'body' => 'required',
+        ]);
+
+        $post->update([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'author_id' => Auth::user()->id,
+            'category_id' => $request->category_id,
+            'body' => $request->body,
+        ]);
+
+        return redirect(route('dashboard.index'))->with('success', 'Post updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect(route('dashboard.index'))->with('success', 'Post deleted successfully.');
     }
 }
