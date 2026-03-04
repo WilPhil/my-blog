@@ -2,19 +2,11 @@
     <div class="py-4 px-4 mx-auto max-w-screen-xl lg:px-6">
         <form class="mb-8 flex items-center max-w-sm mx-auto space-x-2">
             @if (request("category"))
-                <input
-                    type="hidden"
-                    name="category"
-                    value="{{ request("category") }}"
-                />
+                <input type="hidden" name="category" value="{{ request("category") }}" />
             @endif
 
             @if (request("author"))
-                <input
-                    type="hidden"
-                    name="author"
-                    value="{{ request("author") }}"
-                />
+                <input type="hidden" name="author" value="{{ request("author") }}" />
             @endif
 
             <label for="simple-search" class="sr-only">Search</label>
@@ -61,16 +53,11 @@
                 <article
                     class="p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
                 >
-                    <div
-                        class="flex justify-between items-center mb-5 text-gray-500"
-                    >
+                    <div class="flex justify-between items-center mb-5 text-gray-500">
                         <span
                             class="{{ $post->category->color }} text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
                         >
-                            <a
-                                href="/posts?category={{ $post->category->slug }}"
-                                class="hover:cursor-pointer"
-                            >
+                            <a href="/posts?category={{ $post->category->slug }}" class="hover:cursor-pointer">
                                 {{ $post->category->name }}
                             </a>
                         </span>
@@ -78,13 +65,8 @@
                             {{ $post->created_at->diffForHumans() }}
                         </span>
                     </div>
-                    <h2
-                        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-                    >
-                        <a
-                            href="/posts/{{ $post->slug }}"
-                            class="hover:cursor-pointer"
-                        >
+                    <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        <a href="/posts/{{ $post->slug }}" class="hover:cursor-pointer">
                             {{ $post->title }}
                         </a>
                     </h2>
@@ -95,8 +77,8 @@
                         <div class="flex items-center space-x-4">
                             <img
                                 class="w-7 h-7 rounded-full"
-                                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                alt="Jese Leos avatar"
+                                src="{{ $post->author->avatar ? asset("storage/" . $post->author->avatar) : asset("img/default.jpg") }}"
+                                alt="{{ $post->author->name }}"
                             />
                             <span class="text-sm font-medium dark:text-white">
                                 <a
@@ -128,13 +110,9 @@
                     </div>
                 </article>
             @empty
-                <div
-                    class="md:col-span-2 lg:col-span-3 mx-auto w-full flex flex-col gap-2 justify-center items-center"
-                >
+                <div class="md:col-span-2 lg:col-span-3 mx-auto w-full flex flex-col gap-2 justify-center items-center">
                     <p class="font-semibold text-xl">Article not found!</p>
-                    <a href="/posts" class="text-blue-500">
-                        &laquo; Back to all posts.
-                    </a>
+                    <a href="/posts" class="text-blue-500">&laquo; Back to all posts.</a>
                 </div>
             @endforelse
         </div>

@@ -123,7 +123,7 @@
                     <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
                         <img
                             class="mr-4 w-16 h-16 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                            src="{{ $post->author->avatar ? asset("storage/" . $post->author->avatar) : asset("img/default.jpg") }}"
                             alt="{{ $post->author->name }}"
                         />
                         <div>

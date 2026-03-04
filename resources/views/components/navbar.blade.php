@@ -30,8 +30,8 @@
                                 <span class="sr-only">Open user menu</span>
                                 <div class="text-gray-300 text-sm font-medium mr-3">{{ Auth::user()->name }}</div>
                                 <img
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt=""
+                                    src="{{ Auth::user()->avatar ? asset("storage/" . Auth::user()->avatar) : asset("img/default.jpg") }}"
+                                    alt="{{ Auth::user()->name }}"
                                     class="size-8 rounded-full outline -outline-offset-1 outline-white/10"
                                 />
                             </button>
@@ -126,8 +126,8 @@
                 <div class="flex items-center px-5">
                     <div class="shrink-0">
                         <img
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
+                            src="{{ Auth::user()->avatar ? asset("storage/" . Auth::user()->avatar) : asset("img/default.jpg") }}"
+                            alt="{{ Auth::user()->name }}"
                             class="size-10 rounded-full outline -outline-offset-1 outline-white/10"
                         />
                     </div>
