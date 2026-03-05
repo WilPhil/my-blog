@@ -17,16 +17,16 @@ Route::get('/posts', function () {
 
     $posts = Post::latest()->filter(request(['search', 'category', 'author']))->paginate(6)->withQueryString();
 
-    $title = 'All Articles.';
+    $title = 'All Posts.';
 
     if (request('category')) {
         $category = Category::firstWhere('slug', request('category'));
-        $title = $posts->total().' '.$category->name.' articles.';
+        $title = $posts->total().' '.$category->name.' posts.';
     }
 
     if (request('author')) {
         $author = User::firstWhere('username', request('author'));
-        $title = $posts->total().' '.$author->name.' articles.';
+        $title = $posts->total().' '.$author->name.' posts.';
     }
 
     return view('posts', ['title' => $title, 'posts' => $posts]);

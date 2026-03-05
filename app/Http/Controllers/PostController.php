@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Rules\Striptags;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -46,7 +47,7 @@ class PostController extends Controller
         Validator::make($request->all(), [
             'title' => 'required|min:5|max:255',
             'category_id' => 'required',
-            'body' => 'required',
+            'body' => ['required', new Striptags],
         ], [], [
             'category_id' => 'category',
         ])->validate();

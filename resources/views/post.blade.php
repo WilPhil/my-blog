@@ -41,7 +41,7 @@
                     </h1>
                 </header>
                 <p>
-                    {{ $post->body }}
+                    {!! $post->body !!}
                 </p>
             </article>
         </div>

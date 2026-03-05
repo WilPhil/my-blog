@@ -1,4 +1,4 @@
-@push("filePondStyle")
+@push("styles")
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link
         href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
@@ -157,7 +157,7 @@
     </form>
 </section>
 
-@push("filePondScript")
+@push("scripts")
     <script>
         const input = document.getElementById('avatar');
         const previewPhoto = () => {

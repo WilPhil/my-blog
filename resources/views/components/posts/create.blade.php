@@ -1,7 +1,11 @@
+@push("styles")
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+@endpush
+
 <!-- Modal content -->
 <div class="max-w-4xl relative p-4 bg-white rounded-lg dark:bg-gray-800 sm:p-5">
     <!-- Modal body -->
-    <form action="{{ route("dashboard.store") }}" method="POST">
+    <form action="{{ route("dashboard.store") }}" method="POST" id="form-post">
         @csrf
         <div class="mb-4">
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -111,6 +115,7 @@
                 name="body"
                 rows="4"
                 class="@error("body")
+                    hidden
                     bg-danger-soft
                     border
                     border-danger-subtle
@@ -126,6 +131,7 @@
                     shadow-xs
                     placeholder:text-fg-danger-strong
                 @else
+                    hidden
                     border
                     border-gray-300
                     text-gray-900
@@ -147,6 +153,7 @@
             >
 {{ old("body") }}</textarea
             >
+            <div id="editor">{!! old("body") !!}</div>
             @error("body")
                 <p class="mt-2.5 text-sm text-fg-danger-strong">
                     {{ $message }}
@@ -178,3 +185,29 @@
         </div>
     </form>
 </div>
+
+@push("scripts")
+    <!-- Include the Quill library -->
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+    <!-- Initialize Quill editor -->
+    <script>
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: 'Write post body here',
+        });
+
+        // quill.on('text-change', function () {
+        //     document.getElementById('body').value = quill.root.innerHTML;
+        // });
+
+        const formPost = document.querySelector('#form-post');
+        const postBody = document.querySelector('#body');
+
+        formPost.addEventListener('submit', function (e) {
+            e.preventDefault();
+            postBody.value = quill.root.innerHTML;
+            this.submit();
+        });
+    </script>
+@endpush

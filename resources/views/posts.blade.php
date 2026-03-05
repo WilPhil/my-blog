@@ -70,10 +70,10 @@
                             {{ $post->title }}
                         </a>
                     </h2>
-                    <p class="mb-5 font-light text-gray-500 dark:text-gray-400">
-                        {{ Str::limit($post->body, 100) }}
+                    <p class="mb-3 font-light text-gray-500 dark:text-gray-400">
+                        {{ Str::of($post->body)->stripTags()->limit(100) }}
                     </p>
-                    <div class="flex justify-between items-center">
+                    <div class="mt-5 flex justify-between items-center">
                         <div class="flex items-center space-x-4">
                             <img
                                 class="w-7 h-7 rounded-full"
