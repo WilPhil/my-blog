@@ -1,0 +1,101 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class CategoryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $categories = Category::latest();
+
+        if (request('search')) {
+            $categories->where('name', 'like', '%'.request('search').'%');
+        }
+
+        return view('category.index', ['categories' => $categories->paginate(5)->withQueryString()]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required',
+        ]);
+
+        Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'color' => $request->color,
+        ]);
+
+        return redirect(route('category.index'))->with('success', 'Category created successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Category $category)
+    {
+        $request->validate([
+            'name' => 'required',
+            'color' => 'required',
+        ]);
+
+        $category->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'color' => $request->color,
+        ]);
+
+        return redirect(route('category.index'))->with('success', 'Category updated successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Category $category)
+    {
+        // If there is a post with this category, it will update to the default category (general)
+        $category->posts()->update(['category_id' => 1]);
+
+        $category->delete();
+
+        return redirect(route('category.index'))->with('success', 'Category deleted successfully.');
+    }
+}

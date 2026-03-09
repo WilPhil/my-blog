@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Category;
@@ -8,10 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home', ['title' => 'Home']);
-});
-
-Route::get('/posts', function () {
     // Eager Load
     // $posts = Post::with('author', 'category')->latest()->get();
 
@@ -30,18 +27,10 @@ Route::get('/posts', function () {
     }
 
     return view('posts', ['title' => $title, 'posts' => $posts]);
-});
+})->name('home');
 
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('post', ['title' => 'Single Post', 'post' => $post]);
-});
-
-Route::get('/about', function () {
-    return view('about', ['title' => 'About']);
-});
-
-Route::get('/contact', function () {
-    return view('contact', ['title' => 'Contact']);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -59,6 +48,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Read
     Route::get('/dashboard', [PostController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/{post:slug}', [PostController::class, 'show'])->name('dashboard.show');
+});
+
+Route::middleware(['auth', 'can:admin'])->group(function () {
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::patch('/category/{category:slug}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/{category:slug}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
 
 Route::middleware('auth')->group(function () {

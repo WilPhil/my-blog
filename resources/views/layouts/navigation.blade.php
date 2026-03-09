@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                         {{ __("Dashboard") }}
                     </x-nav-link>
+                    @if (Auth::user()->is_admin)
+                        <x-nav-link :href="route('category.index')" :active="request()->routeIs('category.index')">
+                            {{ __("Category") }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -53,6 +58,10 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('home')">
+                            {{ __("Home") }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __("Profile") }}
                         </x-dropdown-link>
@@ -110,6 +119,11 @@
             <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 {{ __("Dashboard") }}
             </x-responsive-nav-link>
+            @if (Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('category.index')" :active="request()->routeIs('category.index')">
+                    {{ __("Category") }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -129,6 +143,10 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('home')">
+                    {{ __("Home") }}
+                </x-responsive-nav-link>
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __("Profile") }}
                 </x-responsive-nav-link>

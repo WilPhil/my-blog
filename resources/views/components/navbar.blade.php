@@ -1,22 +1,10 @@
 <nav class="bg-gray-800">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
-            <div class="flex items-center">
-                <div class="shrink-0">
-                    <img
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                        class="size-8"
-                    />
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <x-fe-nav-link href="/" :current="request()->is('/')">Home</x-fe-nav-link>
-                        <x-fe-nav-link href="/posts" :current="request()->is('posts')">Blog</x-fe-nav-link>
-                        <x-fe-nav-link href="/about" :current="request()->is('about')">About</x-fe-nav-link>
-                        <x-fe-nav-link href="/contact" :current="request()->is('contact')">Contact</x-fe-nav-link>
-                    </div>
-                </div>
+            <div class="flex items-center mt-1">
+                <a href="/">
+                    <span class="text-white size-8">椿</span>
+                </a>
             </div>
             <div class="hidden md:block">
                 @if (Auth::check())
@@ -42,16 +30,16 @@
                                 class="w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                             >
                                 <a
-                                    href="/profile"
-                                    class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
-                                >
-                                    Your profile
-                                </a>
-                                <a
                                     href="{{ route("dashboard.index") }}"
                                     class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
                                 >
-                                    Settings
+                                    Dashboard
+                                </a>
+                                <a
+                                    href="/profile"
+                                    class="block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden"
+                                >
+                                    Profile
                                 </a>
                                 <form method="POST" action="/logout">
                                     @csrf
@@ -115,12 +103,6 @@
     </div>
 
     <el-disclosure id="mobile-menu" hidden class="block md:hidden">
-        <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-            <x-fe-nav-link href="/" :current="request()->is('home')" class="block">Home</x-fe-nav-link>
-            <x-fe-nav-link href="/posts" :current="request()->is('posts')" class="block">Blog</x-fe-nav-link>
-            <x-fe-nav-link href="/about" :current="request()->is('about')" class="block">About</x-fe-nav-link>
-            <x-fe-nav-link href="/contact" :current="request()->is('contact')" class="block">Contact</x-fe-nav-link>
-        </div>
         <div class="border-t border-white/10 pt-4 pb-3">
             @if (Auth::check())
                 <div class="flex items-center px-5">
@@ -142,16 +124,16 @@
                 </div>
                 <div class="mt-3 space-y-1 px-2">
                     <a
-                        href="/profile"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
-                    >
-                        Your profile
-                    </a>
-                    <a
                         href="{{ route("dashboard.index") }}"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
                     >
-                        Settings
+                        Dashboard
+                    </a>
+                    <a
+                        href="/profile"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-white/5 hover:text-white"
+                    >
+                        Profile
                     </a>
                     <form method="POST" action="/logout">
                         @csrf

@@ -14,21 +14,27 @@ class CategorySeeder extends Seeder
     {
         //
         Category::factory()->create([
+            'name' => 'General',
+            'slug' => 'general',
+            'color' => '#f1f5f9',
+        ]);
+
+        Category::factory()->create([
             'name' => 'Web Programming',
             'slug' => 'web-programming',
-            'color' => 'bg-green-100',
+            'color' => '#dcfce7',
         ]);
 
         Category::factory()->create([
             'name' => 'Artificial Intelligence',
             'slug' => 'ai',
-            'color' => 'bg-indigo-100',
+            'color' => '#e0e7ff',
         ]);
 
         Category::factory()->create([
             'name' => 'UI/UX',
             'slug' => 'ui-ux',
-            'color' => 'bg-orange-100',
+            'color' => '#ffedd4',
         ]);
     }
 }

@@ -55,9 +55,10 @@
                 >
                     <div class="flex justify-between items-center mb-5 text-gray-500">
                         <span
-                            class="{{ $post->category->color }} text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
+                            class="text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded dark:bg-primary-200 dark:text-primary-800"
+                            style="background-color: {{ $post->category->color }}"
                         >
-                            <a href="/posts?category={{ $post->category->slug }}" class="hover:cursor-pointer">
+                            <a href="/?category={{ $post->category->slug }}" class="hover:cursor-pointer">
                                 {{ $post->category->name }}
                             </a>
                         </span>
@@ -82,7 +83,7 @@
                             />
                             <span class="text-sm font-medium dark:text-white">
                                 <a
-                                    href="/posts?author={{ $post->author->username }}"
+                                    href="/?author={{ $post->author->username }}"
                                     class="hover:cursor-pointer hover:underline"
                                 >
                                     {{ $post->author->name }}

@@ -131,7 +131,8 @@
                                 {{ $post->author->name }}
                             </p>
                             <span
-                                class="block shrink-0 {{ $post->category->color }} text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 my-1 rounded dark:bg-primary-200 dark:text-primary-800"
+                                class="block shrink-0 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 my-1 rounded dark:bg-primary-200 dark:text-primary-800"
+                                style="background-color: {{ $post->category->color }}"
                             >
                                 {{ $post->category->name }}
                             </span>
