@@ -1,6 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Posts by {{ Auth::user()->name }}</h2>
+        @if (Auth::user()->is_admin)
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">All user posts</h2>
+        @else
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Posts by {{ Auth::user()->name }}</h2>
+        @endif
     </x-slot>
 
     <div class="py-12">

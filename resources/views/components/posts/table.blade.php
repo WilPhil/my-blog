@@ -24,10 +24,10 @@
                             <input
                                 type="text"
                                 id="simple-search"
-                                name="title"
+                                name="search"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search title post..."
-                                value="{{ request("title") }}"
+                                placeholder="Search title, category, or author..."
+                                value="{{ request("search") }}"
                             />
                         </div>
                     </form>
@@ -37,9 +37,6 @@
                 >
                     <a
                         href="{{ route("dashboard.create") }}"
-                        id="createProductModalButtonX"
-                        data-modal-target="createProductModalX"
-                        data-modal-toggle="createProductModalX"
                         class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                     >
                         <svg
@@ -55,7 +52,7 @@
                                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                             />
                         </svg>
-                        Create post
+                        New post
                     </a>
                 </div>
             </div>
@@ -66,6 +63,11 @@
                             <th scope="col" class="px-4 py-4">#</th>
                             <th scope="col" class="px-4 py-3">Title</th>
                             <th scope="col" class="px-4 py-3">Category</th>
+
+                            @if (auth()->user()->is_admin)
+                                <th scope="col" class="px-4 py-3">Author</th>
+                            @endif
+
                             <th scope="col" class="px-4 py-3">Created At</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">Actions</span>
@@ -84,6 +86,10 @@
                                     </a>
                                 </td>
                                 <td class="px-4 py-3">{{ $post->category->name }}</td>
+                                @if (Auth::user()->is_admin)
+                                    <td class="px-4 py-3">{{ $post->author->name }}</td>
+                                @endif
+
                                 <td class="px-4 py-3">{{ $post->created_at->toFormattedDateString() }}</td>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button

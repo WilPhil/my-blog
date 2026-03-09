@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Rules\Striptags;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,13 +17,21 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('author_id', Auth::user()->id)->latest();
-
-        if (request('title')) {
-            $posts->where('title', 'like', '%'.request('title').'%');
+        if (auth::user()->is_admin) {
+            $posts = post::latest();
+        } else {
+            $posts = post::where('author_id', auth::user()->id)->latest();
         }
 
-        return view('dashboard.index', ['posts' => $posts->paginate(5)->withQueryString()]);
+        if (request('search')) {
+            $posts->where(function ($q) {
+                $q->where('title', 'like', '%'.request('search').'%')
+                    ->orwherehas('category', fn (builder $query) => $query->where('name', 'like', '%'.request('search').'%'))
+                    ->orwherehas('author', fn (builder $query) => $query->where('name', 'like', '%'.request('search').'%'));
+            });
+        }
+
+        return view('dashboard.index', ['posts' => $posts->paginate(5)->withquerystring()]);
     }
 
     /**
@@ -86,6 +95,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
+            'author_id' => 'required',
             'category_id' => 'required',
             'body' => 'required',
         ]);
@@ -93,7 +103,7 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
-            'author_id' => Auth::user()->id,
+            'author_id' => $request->author_id,
             'category_id' => $request->category_id,
             'body' => $request->body,
         ]);

@@ -55,6 +55,9 @@
                 </p>
             @enderror
         </div>
+
+        <input type="text" class="hidden" value="{{ $post->author->id }}" name="author_id" />
+
         <div class="mb-4">
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
             <select
